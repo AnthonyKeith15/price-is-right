@@ -20,12 +20,15 @@ class ContestantInfo {
 
 socket.on('connect', () => {
   console.log('Connected to server');
-  let contestant = new ContestantInfo
-  
-  rl.question('What is your name? ', (name) => {
-    contestant.name = name
-    socket.emit('addPlayer', contestant);
-  });
+  rl.question('What is your name? ', (username) => {
+    let contestant = new ContestantInfo
+    rl.question('What is your guess? ', (guess) => {
+      contestant.username = username
+      contestant.guess = guess
+      socket.emit('addPlayer', contestant)
+      console.log('Waiting for other players')
+    });
+  })
 });
 
 socket.on('disconnect', () => {
